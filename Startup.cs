@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using Perfume.Data;
 
 namespace Perfume
 {
@@ -28,10 +29,9 @@ namespace Perfume
         {
 
             services.AddControllers();
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Perfume", Version = "v1" });
-            });
+            
+            //usando uma instância que sobreviverá a cada request do client
+            services.AddScoped<IPerfumeRepo, MockPerfumeRepo>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,8 +39,8 @@ namespace Perfume
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perfume v1"));
+                //app.UseSwagger();
+                //app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Perfume v1"));
             }
 
             app.UseHttpsRedirection();

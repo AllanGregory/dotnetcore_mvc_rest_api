@@ -12,7 +12,15 @@ namespace Perfume.Controller
     [ApiController] //Para que a controller adote os comportamentos de um Controller
     public class PerfumesController : ControllerBase //Herança da ControllerBase da lib MVC da Microsoft, pois não temos uma camada de View
     {
-        private readonly MockPerfumeRepo _repository = new MockPerfumeRepo();
+        private readonly IPerfumeRepo _repository;
+
+        //Injeção de dependência no construtor
+        public PerfumesController(IPerfumeRepo repository)
+        {
+            _repository = repository;
+        }
+
+        //private readonly MockPerfumeRepo _repository = new MockPerfumeRepo();
         
         //Action result se baseia no verbo que estamos chamando (get, post, put etc)
         //Aqui, no caso, está retornando uma lista de PerfumeModel
