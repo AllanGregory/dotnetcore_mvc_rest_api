@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,11 +28,14 @@ namespace Perfume
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PerfumeContext>(opt => opt.UseSqlServer
+                (Configuration.GetConnectionString("PerfumeConnection")));
 
             services.AddControllers();
             
             //usando uma instância que sobreviverá a cada request do client
-            services.AddScoped<IPerfumeRepo, MockPerfumeRepo>();
+            //services.AddScoped<IPerfumeRepo, MockPerfumeRepo>();
+            services.AddScoped<IPerfumeRepo, SqlPerfumeRepo>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
