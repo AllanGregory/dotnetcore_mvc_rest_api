@@ -32,6 +32,8 @@ namespace Perfume
                 (Configuration.GetConnectionString("PerfumeConnection")));
 
             services.AddControllers();
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             
             //usando uma instância que sobreviverá a cada request do client
             //services.AddScoped<IPerfumeRepo, MockPerfumeRepo>();

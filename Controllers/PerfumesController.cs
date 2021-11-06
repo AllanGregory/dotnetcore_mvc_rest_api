@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Perfume.Data;
+using Perfume.Dtos;
 using Perfume.Models;
 
 namespace Perfume.Controller
@@ -13,11 +15,13 @@ namespace Perfume.Controller
     public class PerfumesController : ControllerBase //Herança da ControllerBase da lib MVC da Microsoft, pois não temos uma camada de View
     {
         private readonly IPerfumeRepo _repository;
+        private readonly IMapper _mapper;
 
         //Injeção de dependência no construtor
-        public PerfumesController(IPerfumeRepo repository)
+        public PerfumesController(IPerfumeRepo repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         //private readonly MockPerfumeRepo _repository = new MockPerfumeRepo();
@@ -26,20 +30,31 @@ namespace Perfume.Controller
         //Aqui, no caso, está retornando uma lista de PerfumeModel
         //GET api/perfumes
         [HttpGet]
-        public ActionResult <IEnumerable<PerfumeModel>> GetAllPerfumes()
+        public ActionResult <IEnumerable<PerfumeReadDto>> GetAllPerfumes()
         {
             var perfumeItems = _repository.GetAllPerfumes();
             
-            return Ok(perfumeItems);
+            //Retornando o tipo DTO, fazendo mapeamento do perfumeItem
+            //Isso para transformar o retorno do nosso repositório
+            //em um retorno do DTO para o cliente
+            return Ok(_mapper.Map<IEnumerable<PerfumeReadDto>>(perfumeItems));
         }
 
         //GET api/perfumes/{id}
         [HttpGet("{id}")]
-        public ActionResult <PerfumeModel> GetPerfumeById(int id)
+        public ActionResult <PerfumeReadDto> GetPerfumeById(int id)
         {
             var perfumeItem = _repository.GetPerfumeById(id);
 
-            return Ok(perfumeItem);
+            if (perfumeItem != null)
+            {
+                //Retornando o tipo DTO, fazendo mapeamento do perfumeItem
+                //Isso para transformar o retorno do nosso repositório
+                //em um retorno do DTO para o cliente
+                return Ok(_mapper.Map<PerfumeReadDto>(perfumeItem));
+            }
+
+            return NotFound();
         }
     }
 }
