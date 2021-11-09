@@ -6,6 +6,11 @@ namespace Perfume.Data
     //Repositório apenas para retornar dados mockados
     public class MockPerfumeRepo : IPerfumeRepo
     {
+        public void CreatePerfume(PerfumeModel perfume)
+        {
+            throw new System.NotImplementedException();
+        }
+
         //Método que retorna uma lista do tipo PerfumeModel
         public IEnumerable<PerfumeModel> GetAllPerfumes()
         {
@@ -51,6 +56,11 @@ namespace Perfume.Data
                 Projecao = "Média",
                 Longevidade = "Alta"
             };
+        }
+
+        public bool SaveChanges()
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

@@ -11,6 +11,7 @@ namespace Perfume.Profiles
             //Criando mapeamento de uma model para o DTO
             //CreateMap<FROM, TO>
             CreateMap<PerfumeModel, PerfumeReadDto>();
+            CreateMap<PerfumeCreateDto, PerfumeModel>();
         }
     }
 }

@@ -41,7 +41,7 @@ namespace Perfume.Controller
         }
 
         //GET api/perfumes/{id}
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name="GetPerfumeById")]
         public ActionResult <PerfumeReadDto> GetPerfumeById(int id)
         {
             var perfumeItem = _repository.GetPerfumeById(id);
@@ -55,6 +55,20 @@ namespace Perfume.Controller
             }
 
             return NotFound();
+        }
+
+        //POST api/perfumes
+        [HttpPost]
+        public ActionResult <PerfumeReadDto> CreatePerfume(PerfumeCreateDto perfumeCreateDto)
+        {
+            var perfumeModel = _mapper.Map<PerfumeModel>(perfumeCreateDto);
+            _repository.CreatePerfume(perfumeModel);
+            _repository.SaveChanges(); //Cria de fato o objeto no BD
+
+            var perfumeReadDto = _mapper.Map<PerfumeReadDto>(perfumeModel);
+
+            //RouteName, RouteValues, Content do body
+            return CreatedAtRoute(nameof(GetPerfumeById), new {Id = perfumeReadDto.Id}, perfumeReadDto);
         }
     }
 }
