@@ -70,5 +70,25 @@ namespace Perfume.Controller
             //RouteName, RouteValues, Content do body
             return CreatedAtRoute(nameof(GetPerfumeById), new {Id = perfumeReadDto.Id}, perfumeReadDto);
         }
+
+        //PUT api/perfumes/{id}
+        [HttpPut("{id}")]
+        public ActionResult UpdatePerfume(int id, PerfumeUpdateDto perfumeUpdateDto)
+        {
+            var perfumeModelFromRepo = _repository.GetPerfumeById(id);
+
+            if (perfumeModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _mapper.Map(perfumeUpdateDto, perfumeModelFromRepo);
+
+            _repository.UpdatePerfume(perfumeModelFromRepo);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
     }
 }

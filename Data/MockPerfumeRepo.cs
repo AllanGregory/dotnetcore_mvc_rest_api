@@ -62,5 +62,10 @@ namespace Perfume.Data
         {
             throw new System.NotImplementedException();
         }
+
+        public void UpdatePerfume(PerfumeModel perfume)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

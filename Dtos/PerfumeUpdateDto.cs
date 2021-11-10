@@ -5,7 +5,7 @@ namespace Perfume.Dtos
     //Annotations como required nos campos do DTO
     //servem para que o erro no request do client
     //sejam amigáveis
-    public class PerfumeCreateDto
+    public class PerfumeUpdateDto
     {
         [Required]
         [MaxLength(250)]

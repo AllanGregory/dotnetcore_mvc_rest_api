@@ -9,5 +9,6 @@ namespace Perfume.Data
         IEnumerable<PerfumeModel> GetAllPerfumes();
         PerfumeModel GetPerfumeById(int id);
         void CreatePerfume(PerfumeModel perfume);
+        void UpdatePerfume(PerfumeModel perfume);
     }
 }

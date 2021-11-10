@@ -43,5 +43,10 @@ namespace Perfume.Data
         {
             return (_context.SaveChanges() >= 0);
         }
+
+        public void UpdatePerfume(PerfumeModel perfume)
+        {
+            //Não faz nada
+        }
     }
 }
