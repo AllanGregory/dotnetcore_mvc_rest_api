@@ -26,6 +26,16 @@ namespace Perfume.Data
             _context.Perfumes.Add(perfume);
         }
 
+        public void DeletePerfume(PerfumeModel perfume)
+        {
+            if (perfume == null)
+            {
+                throw new ArgumentNullException(nameof(perfume));
+            }
+
+            _context.Perfumes.Remove(perfume);
+        }
+
         //Utilizando o contexto que eu tenho, trago todos os items como lista
         public IEnumerable<PerfumeModel> GetAllPerfumes()
         {

@@ -11,6 +11,11 @@ namespace Perfume.Data
             throw new System.NotImplementedException();
         }
 
+        public void DeletePerfume(PerfumeModel perfume)
+        {
+            throw new System.NotImplementedException();
+        }
+
         //Método que retorna uma lista do tipo PerfumeModel
         public IEnumerable<PerfumeModel> GetAllPerfumes()
         {

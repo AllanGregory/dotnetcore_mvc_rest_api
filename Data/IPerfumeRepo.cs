@@ -10,5 +10,6 @@ namespace Perfume.Data
         PerfumeModel GetPerfumeById(int id);
         void CreatePerfume(PerfumeModel perfume);
         void UpdatePerfume(PerfumeModel perfume);
+        void DeletePerfume(PerfumeModel perfume);
     }
 }

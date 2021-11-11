@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Perfume.Data;
 using Perfume.Dtos;
@@ -86,6 +87,51 @@ namespace Perfume.Controller
 
             _repository.UpdatePerfume(perfumeModelFromRepo);
 
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        //PATCH api/perfumes/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialPerfumeUpdate(int id, JsonPatchDocument<PerfumeUpdateDto> patchDoc)
+        {
+            var perfumeModelFromRepo = _repository.GetPerfumeById(id);
+
+            if (perfumeModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            var perfumeToPatch = _mapper.Map<PerfumeUpdateDto>(perfumeModelFromRepo);
+            patchDoc.ApplyTo(perfumeToPatch, ModelState);
+
+            if (!TryValidateModel(perfumeToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            _mapper.Map(perfumeToPatch, perfumeModelFromRepo);
+
+            _repository.UpdatePerfume(perfumeModelFromRepo);
+
+            _repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        //DELETE api/perfumes/{id}
+        [HttpDelete("{id}")]
+        public ActionResult DeletePerfume(int id)
+        {
+            var perfumeModelFromRepo = _repository.GetPerfumeById(id);
+
+            if (perfumeModelFromRepo == null)
+            {
+                return NotFound();
+            }
+
+            _repository.DeletePerfume(perfumeModelFromRepo);
             _repository.SaveChanges();
 
             return NoContent();

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Perfume.Data;
+using Newtonsoft.Json.Serialization;
 
 namespace Perfume
 {
@@ -32,6 +33,10 @@ namespace Perfume
                 (Configuration.GetConnectionString("PerfumeConnection")));
 
             services.AddControllers();
+
+            services.AddControllers().AddNewtonsoftJson(s => {
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             

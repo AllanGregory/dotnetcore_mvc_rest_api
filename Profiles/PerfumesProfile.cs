@@ -13,6 +13,7 @@ namespace Perfume.Profiles
             CreateMap<PerfumeModel, PerfumeReadDto>();
             CreateMap<PerfumeCreateDto, PerfumeModel>();
             CreateMap<PerfumeUpdateDto, PerfumeModel>();
+            CreateMap<PerfumeModel, PerfumeUpdateDto>();
         }
     }
 }
